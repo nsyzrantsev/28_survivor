@@ -1,4 +1,6 @@
 def squirrel(N):
+    if N < 0:
+        return 'Integer is not positive!'
     factorial = 1
     while N > 0:
         factorial *= N
