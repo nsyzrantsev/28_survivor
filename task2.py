@@ -5,11 +5,11 @@ def odometer(data):
     distance = 0
     i = 1
     while i < len(data):
-        speed = data[i]
-        if i >= 2:
-            time = data[i-1] - data[i-3]
+        speed = data[i-1]
+        if i >= 3:
+            time = data[i] - data[i-2]
         else:
-            time = data[i-1]
+            time = data[i]
         distance += speed*time
         i += 2
     return distance
