@@ -19,9 +19,10 @@ def ConquestCampaign(N, M, L, battalion):
     
     # захват территории
     while fields:
+        days += 1
         for i in range(len(battlefield)):
             for j in range(len(battlefield[i])):
-                if matrix[i][j] == days:
+                if matrix[i][j] == days-1:
                     if i > 0:
                         if battlefield[i-1][j] == 0:
                             battlefield[i-1][j] = days
@@ -38,5 +39,5 @@ def ConquestCampaign(N, M, L, battalion):
                         if battlefield[i][j+1] == 0:
                             battlefield[i][j+1] = days
                             fields -= 1
-        days += 1
+
     return days
