@@ -1,45 +1,45 @@
+class Battle:
+
+    def __init__(self, N, M):
+        self.N = N
+        self.M = M
+        self.battlefield = [[0 for j in range(M)] for i in range(N)]
+        self.day = 0
+        self.free = N*M
+
+    def start(self, battalion):
+        self.day = 1
+        for i in range(0, len(battalion), 2):
+            line = battalion[i] - 1
+            column = battalion[i+1] - 1
+            if self.battlefield[line][column] == 0:
+                self.battlefield[line][column] = 1
+                self.free -= 1
+    
+    def run(self):
+        while self.free != 0:
+            self.day += 1
+            for x, line in enumerate(self.battlefield):
+                for y, value in enumerate(line):
+                    if value == self.day - 1:
+                        self.step(x, y)
+        return self.day
+    
+    def step(self, x, y):
+        self.step_to_point(x-1, y)
+        self.step_to_point(x+1, y)
+        self.step_to_point(x, y-1)
+        self.step_to_point(x, y+1)
+
+    def step_to_point(self, x, y):
+        if x >= 0 and x < self.N and y >= 0 and y < self.M:
+            if self.battlefield[x][y] == 0:
+                self.battlefield[x][y] = self.day
+                self.free -= 1
+
 def ConquestCampaign(N, M, L, battalion):
-    if N*M == 0:
-        return 0
-    elif N*M == L:
-        return 1
-    
-    # инициализация поля захвата
-    matrix = [[0 for j in range(M)] for i in range(N)]
-    
-    # высадка первых войск
-    day = 1
-    count = 0
-    for i in range(0, L+1, 2):
-        line = battalion[i] - 1
-        column = battalion[i+1] - 1
-        matrix[line][column] = day
-        count += 1
-    
-    
-    # захват территории
-    while True:
-        if count == N*M:
-            break
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                if matrix[i][j] == day:
-                    if i > 0:
-                        if matrix[i-1][j] == 0:
-                            matrix[i-1][j] = day + 1
-                            count += 1
-                    if i >= 0 and i < N-1:
-                        if matrix[i+1][j] == 0:
-                            matrix[i+1][j] = day + 1
-                            count += 1
-                    if j > 0:
-                        if matrix[i][j-1] == 0:
-                            matrix[i][j-1] = day + 1
-                            count += 1
-                    if j >= 0 and j < M-1:
-                        if matrix[i][j+1] == 0:
-                            matrix[i][j+1] = day + 1
-                            count += 1
-        day += 1
-    
-    return day
+    battle = Battle(N, M)
+    battle.start(battalion)
+
+    return battle.run()
+
