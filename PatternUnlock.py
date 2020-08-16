@@ -30,8 +30,10 @@ class Unlock:
             self.length += len_points
         return self.length
 
-def PatternUnlock(N, hits):
+def PatternUnlock(N, hits) -> str:
     unlock = Unlock(N)
     length = unlock.length_sequence(hits)
-    result = str(int(round(length, 5)*100000))
+    result = str(int(round(length, 5)*100000)).strip('0')
     return result
+
+print(PatternUnlock(3, [2, 1, 9]))
