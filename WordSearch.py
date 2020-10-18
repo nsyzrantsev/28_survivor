@@ -1,6 +1,8 @@
 def StringSeparator(string):
     line = ''
-    separated_str = []
+    separated_str = string.split(' ')
+
+
     for i, value in enumerate(string):
         if i == len(string) - 1:
             line += value
@@ -22,7 +24,7 @@ def WordSeparator(l, string):
     sep_lst = list()
     line = ''
     start = 0
-    
+
     for i, value in enumerate(lst):
         if i == len(lst)-1:
             sep_lst.append(line+value)
@@ -34,8 +36,6 @@ def WordSeparator(l, string):
         else:
             sep_lst.append(line)
             line = value
-            if i == len(lst)-1:
-                sep_lst.append(line)
 
     return sep_lst
             
@@ -60,3 +60,7 @@ def WordSearch(l, string, subs):
         else:
             result.append(0)
     return result
+
+line = 'Пустые строк строк в такой разбивке полностью исключаются. Если ширина разбивки меньше какого-то слова, то это слово разбиваешься строк на несколько'
+
+print(WordSearch(3, '12345', '123'))

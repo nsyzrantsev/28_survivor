@@ -23,19 +23,19 @@ def ConquestCampaign(N, M, L, battalion):
         for i in range(len(battlefield)):
             for j in range(len(battlefield[i])):
                 if battlefield[i][j] == days-1:
-                    if i > 0:
+                    if i-1 >= 0:
                         if battlefield[i-1][j] == 0:
                             battlefield[i-1][j] = days
                             fields -= 1
-                    if i < N-1:
+                    if i+1 < N:
                         if battlefield[i+1][j] == 0:
                             battlefield[i+1][j] = days
                             fields -= 1
-                    if j > 0:
+                    if j-1 >= 0:
                         if battlefield[i][j-1] == 0:
                             battlefield[i][j-1] = days
                             fields -= 1
-                    if j < M-1:
+                    if j+1 < M:
                         if battlefield[i][j+1] == 0:
                             battlefield[i][j+1] = days
                             fields -= 1
