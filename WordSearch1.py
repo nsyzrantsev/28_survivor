@@ -1,3 +1,5 @@
+# https://skillsmart.ru/algo/lvl1/6d4d.html
+
 def WordsCutter(a, l):
     text = a.split()
     lst_words = list()
@@ -15,6 +17,9 @@ def TextAlignment(words, l):
     line = words[0]
     lst = words[1:]
     result = list()
+    if len(words) == 1 and len(line) <= l:
+        result.append(line)
+        return result
     for i, e in enumerate(lst):
         if len(line+e) <= l:
             line += e
@@ -27,23 +32,10 @@ def TextAlignment(words, l):
     return result
 
 def WordSearch(length, s, subs):
-    formated_str = WordsCutter(s, length)
-    text = TextAlignment(formated_str, length)
-    result = [0]*(len(text))
-    for i, string in enumerate(text):
-        word = ''
-        count = False
-        for j, substr in enumerate(string):
-            if j == len(string)-1:
-                if word+substr == subs:
-                    count = True
-                    result[i] = 1
-                    count = False
-            if substr != ' ':
-                word += substr
-            elif word == subs:
-                count = True
-                result[i] = 1
-                count = False
-            
+    formated = WordsCutter(s, length)
+    text = TextAlignment(formated, length)
+    result = [0]*len(text)
+    for i, string in enumerate(text):    
+        if subs in string.split():
+            result[i] = 1
     return result
