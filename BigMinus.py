@@ -23,5 +23,5 @@ def BigMinus(s1, s2):
         sub += str(num)
     sub = sub[::-1]
     if count_zeros == long:
-        return 0
+        return '0'
     return sub
