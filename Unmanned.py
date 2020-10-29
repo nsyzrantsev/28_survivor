@@ -18,5 +18,3 @@ def Unmanned(L, N, track):
     if time == 0:
         time = L
     return time
-
-print(Unmanned(10, 2, [[11,5,5],[15,2,2]]))
