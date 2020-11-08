@@ -1,7 +1,6 @@
 # https://github.com/nick-syz/skillsmart/blob/master/TankRush.py
 
 def MaximumDiscount(N, price):
-    res = ''
     price.sort(reverse=True)
     method1 = sum(price[-1:-int(N/3)])
     method2 = 0
