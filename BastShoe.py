@@ -99,7 +99,7 @@ def BastShoe(command):
     action = Redactor(command)
     return action.redaction()
 
-while True:
+'''while True:
     line = str(input())
     if line == 'exit':
         break
@@ -107,7 +107,7 @@ while True:
     print(Redactor.history)
     print(Redactor.count)
     print('-------------------')
-
+'''
 '''
 data = ['1 Привет', '1 , Мир!', '1 ++', '2 2', '4', '4', '1 *', '4', '4', '4', '3 6', '2 100', '1 Привет', '1 , Мир!', '1 ++', '4', '4', '5', '4', '5', '5', '5', '5', '4', '4', '2 2', '4', '5', '5', '5']
 '''
