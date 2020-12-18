@@ -61,6 +61,7 @@ class Redactor:
             Redactor.history = list()
             return Redactor.before_undo
         if Redactor.count < -len(Redactor.history):
+            Redactor.count = -len(Redactor.history)
             return Redactor.history[-len(Redactor.history)]
         return Redactor.history[Redactor.count]
 
@@ -104,6 +105,7 @@ while True:
         break
     print(BastShoe(line))
     print(Redactor.history)
+    print(Redactor.count)
     print('-------------------')
 
 '''
