@@ -90,14 +90,14 @@ class Redactor:
                 return result
         elif index == 4 and not parameter:
             Redactor.string = self.Undo()
-        elif index == 5 and not parameter:
+        elif index == 5 and not parameter and Redactor.undo_ON:
             Redactor.string = self.Redo()
         return Redactor.string
 
 def BastShoe(command):
     action = Redactor(command)
     return action.redaction()
-'''
+
 while True:
     line = str(input())
     if line == 'exit':
@@ -105,7 +105,7 @@ while True:
     print(BastShoe(line))
     print(Redactor.history)
     print('-------------------')
-'''
+
 '''
 data = ['1 Привет', '1 , Мир!', '1 ++', '2 2', '4', '4', '1 *', '4', '4', '4', '3 6', '2 100', '1 Привет', '1 , Мир!', '1 ++', '4', '4', '5', '4', '5', '5', '5', '5', '4', '4', '2 2', '4', '5', '5', '5']
 '''
