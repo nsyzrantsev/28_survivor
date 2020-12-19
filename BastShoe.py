@@ -39,6 +39,7 @@ class Redactor:
         Redactor.before_undo = Redactor.string
         if Redactor.undo_ON and not Redactor.undo_Reset:
             Redactor.undo_Reset = True
+            Redactor.undo_ON = False
         elif Redactor.undo_ON and Redactor.undo_Reset:
             Redactor.undo_ON = False
             Redactor.undo_Reset = False
@@ -67,9 +68,10 @@ class Redactor:
         return Redactor.history[Redactor.count]
 
     def Redo(self):
-        if Redactor.undo_Reset:
-            Redactor.history = list()
+        if Redactor.undo_Reset and Redactor.undo_ON:
             return Redactor.before_redo
+        elif Redactor.undo_Reset and not Redactor.undo_ON:
+            return Redactor.string
         else:
             Redactor.count += 1
         if Redactor.count > -1:
@@ -99,6 +101,7 @@ class Redactor:
 def BastShoe(command):
     action = Redactor(command)
     return action.redaction()
+
 '''
 while True:
     line = str(input())
@@ -107,8 +110,8 @@ while True:
     print(BastShoe(line))
     print(Redactor.history)
     print(Redactor.count)
-    print('-------------------')'''
-
+    print('-------------------')
+'''
 '''
 data = ['1 Привет', '1 , Мир!', '1 ++', '2 2', '4', '4', '1 *', '4', '4', '4', '3 6', '2 100', '1 Привет', '1 , Мир!', '1 ++', '4', '4', '5', '4', '5', '5', '5', '5', '4', '4', '2 2', '4', '5', '5', '5']
 '''
