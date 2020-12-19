@@ -3,12 +3,11 @@
 class Redactor:
     string = ''
     history = list()
-    undo_ON = False
-    undo_Reset = False
+    reset = False
     count = -1
-    count_reset = -1
-    before_undo = ''
-    before_redo = ''
+    last_index = 0
+    undo_list = list()
+    redo_unable = False
 
     def __init__(self, command):
         self.command = command
@@ -25,29 +24,32 @@ class Redactor:
 
     def addElements(self, parameter):
         Redactor.count = -1
-        Redactor.before_undo = Redactor.string
-        if Redactor.undo_ON and not Redactor.undo_Reset:
-            Redactor.undo_Reset = True
-            Redactor.count = Redactor.count_reset-1
-        elif Redactor.undo_ON and Redactor.undo_Reset:
-            Redactor.undo_ON = False
-            Redactor.undo_Reset = False
+        old_string = Redactor.string
         Redactor.string += parameter
-
+        if Redactor.last_index == 4:
+            if not Redactor.reset:
+                Redactor.reset = True
+                Redactor.undo_list = list()
+                Redactor.undo_list.append(old_string)
+                Redactor.undo_list.append(Redactor.string)
+        elif Redactor.reset:
+            Redactor.undo_list.append(Redactor.string)
+    
     def deleteElements(self, num):
         Redactor.count = -1
-        Redactor.before_undo = Redactor.string
-        if Redactor.undo_ON and not Redactor.undo_Reset:
-            Redactor.undo_Reset = True
-            Redactor.undo_ON = False
-        elif Redactor.undo_ON and Redactor.undo_Reset:
-            Redactor.undo_ON = False
-            Redactor.undo_Reset = False
+        Redactor.old_string = Redactor.string
         if num > len(Redactor.string):
             Redactor.string = ''
         else:
             Redactor.string = Redactor.string[0:len(Redactor.string)-num]
-    
+        if Redactor.last_index == 4:
+            if not Redactor.reset:
+                Redactor.reset = True
+                Redactor.undo_list.append(Redactor.old_string)
+                Redactor.undo_list.append(Redactor.string)
+        elif Redactor.reset:
+            Redactor.undo_list.append(Redactor.string)
+
     def returnElements(self, i):
         if i > len(Redactor.string)-1 or i < 0:
             return ''
@@ -56,24 +58,18 @@ class Redactor:
     def Undo(self):
         Redactor.before_redo = Redactor.string
         Redactor.count -= 1
-        if not Redactor.undo_ON:
-            Redactor.undo_ON = True
-        if Redactor.undo_ON and Redactor.undo_Reset:
-            Redactor.history = list()
-            Redactor.history.append(Redactor.before_undo)
-            return Redactor.before_undo
+        if Redactor.reset:
+            Redactor.history = Redactor.undo_list[:]
+            Redactor.reset = False
         if Redactor.count < -len(Redactor.history):
             Redactor.count = -len(Redactor.history)
             return Redactor.history[-len(Redactor.history)]
         return Redactor.history[Redactor.count]
 
     def Redo(self):
-        if Redactor.undo_Reset and Redactor.undo_ON:
-            return Redactor.before_redo
-        elif Redactor.undo_Reset and not Redactor.undo_ON:
-            return Redactor.string
-        else:
-            Redactor.count += 1
+        if Redactor.last_index == 4:
+            Redactor.redo_unable = True
+        Redactor.count += 1
         if Redactor.count > -1:
             Redactor.count = -1
         return Redactor.history[Redactor.count]
@@ -91,37 +87,16 @@ class Redactor:
         elif index == 3 and parameter:
             if parameter.isnumeric():
                 result = self.returnElements(int(parameter))
+                Redactor.last_index = index
                 return result
         elif index == 4 and not parameter:
             Redactor.string = self.Undo()
-        elif index == 5 and not parameter and Redactor.undo_ON:
-            Redactor.string = self.Redo()
+        elif index == 5 and not parameter:
+            if Redactor.last_index == 4 or Redactor.redo_unable:
+                Redactor.string = self.Redo()
+        Redactor.last_index = index
         return Redactor.string
 
 def BastShoe(command):
     action = Redactor(command)
     return action.redaction()
-
-'''
-while True:
-    line = str(input())
-    if line == 'exit':
-        break
-    print(BastShoe(line))
-    print(Redactor.history)
-    print(Redactor.count)
-    print('-------------------')
-'''
-'''
-data = ['1 Привет', '1 , Мир!', '1 ++', '2 2', '4', '4', '1 *', '4', '4', '4', '3 6', '2 100', '1 Привет', '1 , Мир!', '1 ++', '4', '4', '5', '4', '5', '5', '5', '5', '4', '4', '2 2', '4', '5', '5', '5']
-'''
-
-'''
-for i in data:
-    print(BastShoe(i))
-    print(Redactor.history)
-    print(f'count={Redactor.count}')
-    print(f'before_undo={Redactor.before_undo}')
-    print(f'before_redo={Redactor.before_redo}')
-    print('-------------------')
-'''
