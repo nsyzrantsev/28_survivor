@@ -59,6 +59,7 @@ class Redactor:
             Redactor.undo_ON = True
         if Redactor.undo_ON and Redactor.undo_Reset:
             Redactor.history = list()
+            Redactor.history.append(Redactor.before_undo)
             return Redactor.before_undo
         if Redactor.count < -len(Redactor.history):
             Redactor.count = -len(Redactor.history)
@@ -98,16 +99,16 @@ class Redactor:
 def BastShoe(command):
     action = Redactor(command)
     return action.redaction()
-
-'''while True:
+'''
+while True:
     line = str(input())
     if line == 'exit':
         break
     print(BastShoe(line))
     print(Redactor.history)
     print(Redactor.count)
-    print('-------------------')
-'''
+    print('-------------------')'''
+
 '''
 data = ['1 Привет', '1 , Мир!', '1 ++', '2 2', '4', '4', '1 *', '4', '4', '4', '3 6', '2 100', '1 Привет', '1 , Мир!', '1 ++', '4', '4', '5', '4', '5', '5', '5', '5', '4', '4', '2 2', '4', '5', '5', '5']
 '''
