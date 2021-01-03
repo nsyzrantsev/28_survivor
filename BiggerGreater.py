@@ -1,23 +1,23 @@
 class Combinator:
-    result = list()
-    def combs(self, inp, j=0, start=1):
+    def __init__(self):
+        self.result = list()
+    
+    def combs(self, inp, s, e):
         line = list(inp)
-        for i in range(start, len(line)):
-            self.combs(line, j+1, start+1)
-            line[j], line[i] = line[i], line[j]
-            if ''.join(line) not in Combinator.result:
-                Combinator.result.append(''.join(line))
-            self.combs(line, j+1, start+1)
-            line = list(inp)
-        return Combinator.result
+        for i in range(s, e+1):
+            line[s], line[i] = line[i], line[s]
+            if ''.join(line) not in self.result:
+                self.result.append(''.join(line))
+            self.combs(line, s+1, e)
+            line[s], line[i] = line[i], line[s]
+        return self.result
 
 def BiggerGreater(inp):
-    Combinator.result.append(inp)
     comb = Combinator()
-    comb.combs(inp)
-    words = sorted(Combinator.result)
-    if len(words) > 1:
-        index = words.index(inp)
-        if index < len(words)-1:
-            return words[words.index(inp)+1]
+    comb.result.append(inp)
+    e = len(inp)-1
+    comb.combs(inp, 0, e)
+    words = sorted(comb.result)
+    if len(words) > 1 and words.index(inp) <= len(words)-2:
+        return words[words.index(inp)+1]
     return ''
