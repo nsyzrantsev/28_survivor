@@ -1,18 +1,18 @@
 def listConv(tree, toList):
     mtx = list()
-    for line in tree:
+    for row in tree:
         if toList:
-            l = line.replace('+', '1')
-            l = l.replace('.', '0')
-            mtx.append([int(i) for i in l])
+            line = row.replace('+', '1')
+            line = line.replace('.', '0')
+            mtx.append([int(i) for i in line])
         else:
-            l = ''
-            for j in line:
-                if str(j) in '123456789':
-                    l += '+'
+            line = ''
+            for cell in row:
+                if cell > 0:
+                    line += '+'
                 else:
-                    l += '.'
-            mtx.append(l)
+                    line += '.'
+            mtx.append(line)
     return mtx
 
 def TreeReload(n, m, H, W, tree):
