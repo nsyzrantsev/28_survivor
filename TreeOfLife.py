@@ -1,48 +1,49 @@
-def ListConv(tree, toList):
+def listConv(tree, toList):
     mtx = list()
-    for i in tree:
+    for line in tree:
         if toList:
-            mtx.append(list(i))
+            l = line.replace('+', '1')
+            l = l.replace('.', '0')
+            mtx.append([int(i) for i in l])
         else:
-            mtx.append(''.join([str(j) for j in i]))
+            l = ''
+            for j in line:
+                if str(j) in '123456789':
+                    l += '+'
+                else:
+                    l += '.'
+            mtx.append(l)
     return mtx
 
-def TreeDeath(n, m, H, W, tree):
+def TreeReload(n, m, H, W, tree):
     if n >= 0 and n < H and m >= 0 and m < W:
-        if tree[n][m] != '.':
-            if tree[n][m] <= 2:
-                tree[n][m] = '.'
+        if tree[n][m] <= 2:
+            tree[n][m] = 0
     return tree
 
 # year of destroy
 def Destroy(tree, H, W):
     for n in range(H):
         for m in range(W):
-            if tree[n][m] != '.':
-                if tree[n][m] >= 3:
-                    tree[n][m] = '.'
-                    tree = TreeDeath(n+1, m, H, W, tree)
-                    tree = TreeDeath(n-1, m, H, W, tree)
-                    tree = TreeDeath(n, m+1, H, W, tree)
-                    tree = TreeDeath(n, m-1, H, W, tree)
+            if tree[n][m] >= 3:
+                tree[n][m] = 0
+                tree = TreeReload(n+1, m, H, W, tree)
+                tree = TreeReload(n-1, m, H, W, tree)
+                tree = TreeReload(n, m+1, H, W, tree)
+                tree = TreeReload(n, m-1, H, W, tree)
     return tree
 
 # year of growth
 def Growth(tree, H, W):
     for n in range(H):
         for m in range(W):
-            if tree[n][m] == '.':
-                tree[n][m] = 1
-            elif tree[n][m] == '+':
-                tree[n][m] = 2
-            else:
-                tree[n][m] = tree[n][m] + 1
+            tree[n][m] = tree[n][m] + 1
     return tree
 
 def TreeOfLife(H, W, N, tree):
-    tree = ListConv(tree, True)
+    tree = listConv(tree, True)
     for i in range(1, N+1):
         tree = Growth(tree, H, W)
         if i % 2 == 0:
             tree = Destroy(tree, H, W)
-    return ListConv(tree, False)
+    return listConv(tree, False)
