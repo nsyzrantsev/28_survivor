@@ -46,4 +46,3 @@ def MatrixTurn(matrix, M, N, T):
             l += 1
         matrix = Update(result, M, N)
     matrix = toString(matrix)
-    print(matrix)
