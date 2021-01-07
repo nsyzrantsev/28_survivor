@@ -1,10 +1,10 @@
 def S(A, N):
     B = list()
-    for i in range(N-1):
-        for j in range(N-i-1):
+    for i in range(N):
+        for j in range(N-i):
             k = i + j
-            if len(A[i:k]):
-                B.append(max(A[i:k]))
+            if len(A[j:k]):
+                B.append(max(A[j:k]))
     return B
 
 def TransformTransform(A, N):
