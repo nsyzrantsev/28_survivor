@@ -1,3 +1,4 @@
+# https://skillsmart.ru/algo/lvl1/gc8b.html
 def S(A, N):
     B = list()
     for i in range(N):
