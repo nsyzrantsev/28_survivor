@@ -1,3 +1,5 @@
+# https://skillsmart.ru/algo/lvl1/oafd.html
+
 def Football(F, N):
     k = 0
     for i in range(N-1):
