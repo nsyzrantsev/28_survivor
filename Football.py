@@ -2,6 +2,8 @@
 
 def Football(F, N):
     k = 0
+    if F == sorted(F):
+        return False
     for i in range(N-1):
         for j in range(k, N):
             f = F[:]
