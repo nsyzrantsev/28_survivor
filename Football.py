@@ -7,7 +7,7 @@ def Football(F, N):
             f = F[:]
             if i != j:
                 f[i], f[j] = f[j], f[i]
-            if f == sorted(F[:]) or f[::-1] == sorted(F):
+            if f == sorted(F) or f[::-1] == sorted(F):
                 return True
         k += 1
     return False
